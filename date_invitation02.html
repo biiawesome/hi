@@ -56,6 +56,11 @@
             background-color: #FF1493; /* Darker pink on hover */
         }
 
+        input[type="submit"]:disabled {
+            background-color: #d1d1d1; /* Change button color when disabled */
+            cursor: not-allowed;
+        }
+
         button {
             background-color: #FF69B4; /* Rechoose button */
             color: white;
@@ -104,6 +109,9 @@
             
             // Display the result of the chosen option
             document.getElementById("result").innerHTML = "You picked: " + options[selectedOption];
+
+            // Disable the submit button after the first click
+            document.querySelector('input[type="submit"]').disabled = true;
             
             // Show the "Rechoose" button only if the user hasn't used it yet
             if (rechooseAllowed) {
@@ -120,6 +128,9 @@
                 document.getElementById("result").innerHTML = ""; // Clear previous result
                 document.getElementById("rechoose").style.display = "none"; // Hide the rechoose button
                 rechooseAllowed = false;  // Disable further rechoosing
+
+                // Re-enable the submit button for one more choice
+                document.querySelector('input[type="submit"]').disabled = false;
             }
         }
     </script>

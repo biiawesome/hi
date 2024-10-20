@@ -6,77 +6,75 @@
     <title>Date Invitation</title>
     <style>
         body {
-            background-color: #fbeff2; /* Light pink background */
-            font-family: Arial, sans-serif;
-            color: #333;
+            background-color: #000000; /* Black background */
+            color: #FFC0CB; /* Soft pink text */
+            font-family: 'Courier New', Courier, monospace; /* Romantic font */
             text-align: center;
-            padding: 50px;
+            padding: 20px;
         }
 
         h2 {
-            color: #d9476d; /* Darker pink for the heading */
+            color: #FF69B4; /* Hot pink for headings */
             font-size: 2.5em;
+            margin-bottom: 20px;
         }
 
         p {
             font-size: 1.2em;
-            color: #555;
-            line-height: 1.6;
+            color: #FFD1DC; /* Light pink for normal text */
         }
 
         form {
-            background-color: #fff; /* White background for the form */
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             display: inline-block;
-            padding: 20px;
-            margin-top: 20px;
+            text-align: left;
+            padding: 15px;
+            border: 2px solid #FF69B4; /* Hot pink border */
+            border-radius: 10px;
+            background-color: #2c2c2c; /* Dark gray for contrast */
         }
 
         input[type="radio"] {
             margin-right: 10px;
         }
 
+        label {
+            color: #FFD1DC; /* Light pink for labels */
+            font-size: 1.1em;
+        }
+
         input[type="submit"] {
-            background-color: #d9476d;
+            background-color: #FF69B4; /* Hot pink button */
             color: white;
-            border: none;
             padding: 10px 20px;
-            font-size: 1.2em;
-            border-radius: 5px;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 20px;
+            font-size: 1.1em;
         }
 
         input[type="submit"]:hover {
-            background-color: #c63f61;
+            background-color: #FF1493; /* Darker pink on hover */
         }
 
-        input[type="submit"]:disabled {
-            background-color: #d1d1d1; /* Change button color when disabled */
-            cursor: not-allowed;
-        }
-
-        #rechoose {
-            background-color: #4CAF50;
+        button {
+            background-color: #FF69B4; /* Rechoose button */
             color: white;
-            border: none;
             padding: 10px 20px;
-            font-size: 1.2em;
-            border-radius: 5px;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
+            font-size: 1.1em;
             margin-top: 20px;
-            display: none;  /* Initially hidden */
         }
 
-        #rechoose:hover {
-            background-color: #45a049;
+        button:hover {
+            background-color: #FF1493; /* Darker pink on hover */
         }
 
         #result {
             font-size: 1.5em;
-            color: #d9476d;
-            margin-top: 30px;
+            margin-top: 20px;
+            color: #FFD1DC; /* Light pink for the result */
         }
 
         /* Add cute heart icons */
@@ -91,37 +89,22 @@
         // Function to handle the form submission
         function showOption(event) {
             event.preventDefault();  // Prevents the form from reloading the page
-
-            // Get the selected option
-            const selectedOption = document.querySelector('input[name="date"]:checked');
             
-            // Check if an option is selected
-            if (!selectedOption) {
-                alert("Please select a date option.");
-                return;
-            }
-
+            // Get the selected option
+            const selectedOption = document.querySelector('input[name="date"]:checked').value;
+            
             // Map the numbers to date options
             const options = {
-                1: "Amanda's handmade crochet with scent",
-                2: "Movie date with snacks, kiss and cuddle",
-                3: "Go JB play GoKart (but see if you tired ok)",
-                4: "Surprise adventure (will be at night)",
-                5: "Homemade dinner with busss music (if u dare to come my house cook)"
+                1: "Amanda's handmade crochet with scent (SMELL)",
+                2: "Movie date with snacks, kiss and cuddle (something buss)",
+                3: "Go JB play GoKart (but see if you tired ok) (something fun)",
+                4: "Surprise adventure (will be at night) (a surprise but fun)",
+                5: "Homemade dinner with busss music (if u dare to come my house cook) (TASTE)"
             };
             
             // Display the result of the chosen option
-            document.getElementById("result").innerHTML = "You picked: " + options[selectedOption.value];
-
-            // Disable the submit button after the first pick
-            document.querySelector('input[type="submit"]').disabled = true;
-
-            // Scroll down to make sure the result is visible on smaller screens
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth'
-            });
-
+            document.getElementById("result").innerHTML = "You picked: " + options[selectedOption];
+            
             // Show the "Rechoose" button only if the user hasn't used it yet
             if (rechooseAllowed) {
                 document.getElementById("rechoose").style.display = "block";
@@ -134,8 +117,6 @@
         // Function to allow rechoosing one time
         function allowRechoose() {
             if (rechooseAllowed) {
-                // Re-enable the submit button and reset form for one more choice
-                document.querySelector('input[type="submit"]').disabled = false;
                 document.getElementById("result").innerHTML = ""; // Clear previous result
                 document.getElementById("rechoose").style.display = "none"; // Hide the rechoose button
                 rechooseAllowed = false;  // Disable further rechoosing
@@ -144,23 +125,24 @@
     </script>
 </head>
 <body>
-    <h2>Hi bu, HAPPY BIRTHDAY!!! let's go for a date! 💖💖</h2>
+    <h2>Hi Bu, HAPPY BIRTHDAY!!! <br>
+    Let's go for a date! 💖💖</h2>
     <p>
         Pick a number from 1 to 5! <br>
-        I'll surprise you with a plan! <br>
-        Feel free to rechoose once. <br>
-        Rmb what you chose to avoid rechoosing. <br>
-        Screenshot both options :)
+        <br>
+        Feel free to rechoose ONLY ONCE <br>
+        Rmb what you chose to avoid rechoosing <br>
+        Screenshot BOTH options :)
     </p>
 
     <!-- Form section for choosing the option -->
     <div id="form-section">
         <form onsubmit="showOption(event)">
-            <input type="radio" name="date" value="1" required> 1<br>
-            <input type="radio" name="date" value="2"> 2<br>
-            <input type="radio" name="date" value="3"> 3<br>
-            <input type="radio" name="date" value="4"> 4<br>
-            <input type="radio" name="date" value="5"> 5<br><br>
+            <input type="radio" name="date" value="1" required> <label for="1">1: (SMELL)</label><br>
+            <input type="radio" name="date" value="2"> <label for="2">2: (something buss)</label><br>
+            <input type="radio" name="date" value="3"> <label for="3">3: (something fun)</label><br>
+            <input type="radio" name="date" value="4"> <label for="4">4: (surprise & fun night activity)</label><br>
+            <input type="radio" name="date" value="5"> <label for="5">5: (TASTE)</label><br><br>
             <input type="submit" value="Submit">
         </form>
     </div>

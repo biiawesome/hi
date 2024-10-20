@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Invitation</title>
+    <style>
+        body {
+            background-color: #fbeff2;
+            font-family: Arial, sans-serif;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h2 {
+            color: #d9476d;
+            font-size: 2.5em;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #d9476d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #c63f61;
+        }
+
+        #rechoose {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;  /* Initially hidden */
+        }
+
+        #rechoose:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            font-size: 1.5em;
+            color: #d9476d;
+            margin-top: 30px;
+        }
+
+        /* Add cute heart icons */
+        h2:before, h2:after {
+            content: "💖";
+            margin: 0 10px;
+        }
+    </style>
+    <script>
+        let rechooseAllowed = true;  // Track if the user can rechoose once
+
+        // Function to handle the form submission
+        function showOption(event) {
+            event.preventDefault();  // Prevents the form from reloading the page
+
+            // Get the selected option
+            const selectedOption = document.querySelector('input[name="date"]:checked');
+            
+            // Check if an option is selected
+            if (!selectedOption) {
+                alert("Please select a date option.");
+                return;
+            }
+
+            // Map the numbers to date options
+            const options = {
+                1: "Amanda's handmade crochet with scent",
+                2: "Movie date with snacks, kiss and cuddle",
+                3: "Go JB play GoKart (but see if you tired ok)",
+                4: "Surprise adventure (will be at night)",
+                5: "Homemade dinner with busss music (if u dare to come my house cook)"
+            };
+            
+            // Display the result of the chosen option
+            document.getElementById("result").innerHTML = "You picked: " + options[selectedOption.value];
+
+            // Scroll down to make sure the result is visible on smaller screens
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+
+            // Show the "Rechoose" button only if the user hasn't used it yet
+            if (rechooseAllowed) {
+                document.getElementById("rechoose").style.display = "block";
+            } else {
+                document.getElementById("form-section").style.display = "none"; // Hide the form after 2nd pick
+                document.getElementById("result").innerHTML += "<br><b>This is your final choice!</b>";
+            }
+        }
+
+        // Function to allow rechoosing one time
+        function allowRechoose() {
+            if (rechooseAllowed) {
+                document.getElementById("result").innerHTML = ""; // Clear previous result
+                document.getElementById("rechoose").style.display = "none"; // Hide the rechoose button
+                rechooseAllowed = false;  // Disable further rechoosing
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Hi bu, let's go for a date! 💖</h2>
+    <p>Pick a number from 1 to 5! 
+	I'll surprise you with a plan! 
+	Feel free to rechoose once.</p>
+
+    <!-- Form section for choosing the option -->
+    <div id="form-section">
+        <form onsubmit="showOption(event)">
+            <input type="radio" name="date" value="1" required> 1<br>
+            <input type="radio" name="date" value="2"> 2<br>
+            <input type="radio" name="date" value="3"> 3<br>
+            <input type="radio" name="date" value="4"> 4<br>
+            <input type="radio" name="date" value="5"> 5<br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <!-- The selected option will appear here -->
+    <p id="result"></p>
+
+    <!-- Button to allow rechoosing (initially hidden) -->
+    <button id="rechoose" onclick="allowRechoose()" style="display:none;">Rechoose (Only Once)</button>
+
+</body>
+</html>
+
+

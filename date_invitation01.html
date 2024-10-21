@@ -6,44 +6,34 @@
     <title>Date Invitation</title>
     <style>
         body {
-            background-color: #000000; /* Black background */
-            color: #FFC0CB; /* Soft pink text */
-            font-family: 'Courier New', Courier, monospace; /* Romantic font */
+            background-color: #000000;
+            color: #FFC0CB;
+            font-family: 'Courier New', Courier, monospace;
             text-align: center;
             padding: 20px;
         }
-
         h2 {
-            color: #FF69B4; /* Hot pink for headings */
+            color: #FF69B4;
             font-size: 2.5em;
             margin-bottom: 20px;
         }
-
-        p {
-            font-size: 1.2em;
-            color: #FFD1DC; /* Light pink for normal text */
-        }
-
         form {
             display: inline-block;
             text-align: left;
             padding: 15px;
-            border: 2px solid #FF69B4; /* Hot pink border */
+            border: 2px solid #FF69B4;
             border-radius: 10px;
-            background-color: #2c2c2c; /* Dark gray for contrast */
+            background-color: #2c2c2c;
         }
-
         input[type="radio"] {
             margin-right: 10px;
         }
-
         label {
-            color: #FFD1DC; /* Light pink for labels */
+            color: #FFD1DC;
             font-size: 1.1em;
         }
-
         input[type="submit"] {
-            background-color: #FF69B4; /* Hot pink button */
+            background-color: #FF69B4;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -51,18 +41,15 @@
             cursor: pointer;
             font-size: 1.1em;
         }
-
         input[type="submit"]:hover {
-            background-color: #FF1493; /* Darker pink on hover */
+            background-color: #FF1493;
         }
-
         input[type="submit"]:disabled {
-            background-color: #d1d1d1; /* Change button color when disabled */
+            background-color: #d1d1d1;
             cursor: not-allowed;
         }
-
         button {
-            background-color: #FF69B4; /* Rechoose button */
+            background-color: #FF69B4;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -71,34 +58,27 @@
             font-size: 1.1em;
             margin-top: 20px;
         }
-
         button:hover {
-            background-color: #FF1493; /* Darker pink on hover */
+            background-color: #FF1493;
         }
-
         #result {
             font-size: 1.5em;
             margin-top: 20px;
-            color: #FFD1DC; /* Light pink for the result */
+            color: #FFD1DC;
         }
-
-        /* Add cute heart icons */
         h2:before, h2:after {
             content: "💖";
             margin: 0 10px;
         }
     </style>
     <script>
-        let rechooseAllowed = true;  // Track if the user can rechoose once
+        let rechooseAllowed = true;
 
-        // Function to handle the form submission
-        function showOption(event) {
-            event.preventDefault();  // Prevents the form from reloading the page
-            
-            // Get the selected option
+        function showOption() {
+            // Prevent multiple form submissions
+            document.querySelector('input[type="submit"]').disabled = true;
+
             const selectedOption = document.querySelector('input[name="date"]:checked').value;
-            
-            // Map the numbers to date options
             const options = {
                 1: "Amanda's handmade crochet with scent",
                 2: "Movie date with snacks, kiss and cuddle",
@@ -106,14 +86,9 @@
                 4: "Sky luge at Sentosa",
                 5: "Homemade dinner with busss music (if u dare to eat)"
             };
-            
-            // Display the result of the chosen option
             document.getElementById("result").innerHTML = "You picked: " + options[selectedOption];
-
-            // Disable the submit button after the first click
-            document.querySelector('input[type="submit"]').disabled = true;
             
-            // Show the "Rechoose" button only if the user hasn't used it yet
+            // Show the Rechoose button only once
             if (rechooseAllowed) {
                 document.getElementById("rechoose").style.display = "block";
             } else {
@@ -122,30 +97,25 @@
             }
         }
 
-        // Function to allow rechoosing one time
         function allowRechoose() {
             if (rechooseAllowed) {
-                document.getElementById("result").innerHTML = ""; // Clear previous result
-                document.getElementById("rechoose").style.display = "none"; // Hide the rechoose button
-                rechooseAllowed = false;  // Disable further rechoosing
-
-                // Re-enable the submit button for one more choice
+                // Enable submit button again
                 document.querySelector('input[type="submit"]').disabled = false;
+                document.getElementById("result").innerHTML = "";
+                document.getElementById("rechoose").style.display = "none"; // Hide the rechoose button
+                rechooseAllowed = false; // Disable further rechoosing
             }
         }
     </script>
 </head>
 <body>
-    <h2>Hi Bu, HAPPY BIRTHDAY!!! <br>
-    Let's go for a date! 💖💖</h2>
-    <p>
-        Pick a number from 1 to 5! <br>
-        <br>
-        Rechoose ONLY ONCE :) </p>
+    <h2>Hi Bu, HAPPY BIRTHDAY!!! <br>Let's go for a date! 💖💖</h2>
+    <p>Pick a number from 1 to 5! <br> Rechoose ONLY ONCE :)</p>
 
-    <!-- Form section for choosing the option -->
+    <!-- Form section -->
     <div id="form-section">
-        <form action="https://formspree.io/f/xgvevvbk" method="POST">
+        <!-- Submit form to Formspree -->
+        <form action="https://formspree.io/f/xgvevvbk" method="POST" onsubmit="showOption()">
             <input type="radio" name="date" value="1" required> <label for="1">1: (SMELL)</label><br>
             <input type="radio" name="date" value="2"> <label for="2">2: (something buss)</label><br>
             <input type="radio" name="date" value="3"> <label for="3">3: (something fun)</label><br>
@@ -155,11 +125,10 @@
         </form>
     </div>
 
-    <!-- The selected option will appear here -->
+    <!-- Display the selected option -->
     <p id="result"></p>
 
-    <!-- Button to allow rechoosing (initially hidden) -->
+    <!-- Button to allow rechoosing -->
     <button id="rechoose" onclick="allowRechoose()" style="display:none;">Rechoose (Only Once)</button>
-
 </body>
 </html>

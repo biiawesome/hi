@@ -74,10 +74,10 @@
     <script>
         let rechooseAllowed = true;
 
-        function showOption() {
-            // Prevent multiple form submissions
-            document.querySelector('input[type="submit"]').disabled = true;
+        function showOption(event) {
+            event.preventDefault();  // Prevents the form from submitting immediately
 
+            // Get the selected option
             const selectedOption = document.querySelector('input[name="date"]:checked').value;
             const options = {
                 1: "Amanda's handmade crochet with scent",
@@ -87,23 +87,33 @@
                 5: "Homemade dinner with busss music (if u dare to eat)"
             };
             document.getElementById("result").innerHTML = "You picked: " + options[selectedOption];
+
+            // Disable the submit button to prevent multiple clicks
+            document.querySelector('input[type="submit"]').disabled = true;
+
+            // Show the result for 3 seconds before submitting the form
+            setTimeout(function () {
+                // Submit the form after the delay
+                event.target.submit();
+            }, 5000); // 3000 milliseconds = 3 seconds
             
-            // Show the Rechoose button only once
+            // Show the "Rechoose" button only if the user hasn't used it yet
             if (rechooseAllowed) {
                 document.getElementById("rechoose").style.display = "block";
             } else {
-                document.getElementById("form-section").style.display = "none"; // Hide the form after 2nd pick
+                document.getElementById("form-section").style.display = "none";
                 document.getElementById("result").innerHTML += "<br><b>This is your final choice!</b>";
             }
         }
 
         function allowRechoose() {
             if (rechooseAllowed) {
-                // Enable submit button again
-                document.querySelector('input[type="submit"]').disabled = false;
                 document.getElementById("result").innerHTML = "";
-                document.getElementById("rechoose").style.display = "none"; // Hide the rechoose button
-                rechooseAllowed = false; // Disable further rechoosing
+                document.getElementById("rechoose").style.display = "none";
+                rechooseAllowed = false;
+
+                // Re-enable the submit button for one more choice
+                document.querySelector('input[type="submit"]').disabled = false;
             }
         }
     </script>
@@ -115,7 +125,7 @@
     <!-- Form section -->
     <div id="form-section">
         <!-- Submit form to Formspree -->
-        <form action="https://formspree.io/f/xgvevvbk" method="POST" onsubmit="showOption()">
+        <form action="https://formspree.io/f/xgvevvbk" method="POST" onsubmit="showOption(event)">
             <input type="radio" name="date" value="1" required> <label for="1">1: (SMELL)</label><br>
             <input type="radio" name="date" value="2"> <label for="2">2: (something buss)</label><br>
             <input type="radio" name="date" value="3"> <label for="3">3: (something fun)</label><br>
